@@ -1,0 +1,28 @@
+<!DOCTYPE html><html><head><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>Captive Portal</title>
+<style>*{box-sizing: border-box;}  body {background-color: #e1e1e1; width: 50%; padding: 10px 3% 20px; position: relative;} 
+#regForm {background-color: #1A1888; margin: 70px auto;  border-radius: 1em; font-family: Raleway; position: absolute; padding: 0px; width: 592px; height: 566px; top: 7%; left: 55%;} 
+h3 {text-align: center; color: #B69F3F;}  
+h4 {text-align: center; color: #38B6FF; font-family: Raleway;} 
+input {padding: 10px; background-color: #0F0E0C; width: 100%; font-size: 17px; font-family: Raleway; border: none; border-bottom: 1px solid #B69F3F; color: #B69F3F;}  
+#button {background-color: #0F0E0C; border: 2px solid #B69F3F; border-radius: 2em; width: 150px; height: 50px; font-size: 20px; font-family: Raleway; cursor: pointer; position: absolute; bottom: 10px; left: 37%;}
+#screen {background-color: #0F0E0C; border: 18px solid #000000; position: relative; padding: 25px; width: 592px; height: 357px; margin-top: 79px;}
+#screenDetail {background-color: #0F0E0C; border: 6px solid #B69F3F; margin-top: 0px; position: relative; padding: 50px; width: 169px; height: 115px; top: 50%; left: 36%;}
+#hole1 {background-color: #e1e1e1; border: 8px solid #A6A8AB; border-radius: 50%; position: absolute; width: 70px; height: 70px; top:0px;}
+#hole2 {background-color: #e1e1e1; border: 8px solid #A6A8AB; border-radius: 50%; position: absolute; width: 70px; height: 70px; top:0px; right: 0px;}
+#hole3 {background-color: #e1e1e1; border: 8px solid #A6A8AB; border-radius: 50%; position: absolute; width: 70px; height: 70px; bottom:0px; left: 0px;}
+#hole4 {background-color: #e1e1e1; border: 8px solid #A6A8AB; border-radius: 50%; position: absolute; width: 70px; height: 70px; bottom:0px; right: 0px;}
+</style></head><p></p>
+<body><form id='regForm' action='/action_page.php' method='post'><div class='tab'><br>
+<div id = 'hole1'></div>
+<div id = 'hole2'></div>
+<div id = 'hole3'></div>
+<div id = 'hole4'></div>
+<div id='screen'>
+<p><h4>Insert your network informations</h4></p>
+<p><input name='ssid' size='40' type='ssid' placeholder='SSID'/></p><br>
+<p><input name='password' size='40' type='password' placeholder='Password'/></p><br>
+<input id = 'button' type = 'submit' value = 'Press'>
+</div>
+<div id="screenDetail"></div>
+<br>
+</body></html>

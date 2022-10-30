@@ -1,22 +1,9 @@
 #include <Arduino.h>
-#include <WiFi.h>
 #include <HTTPClient.h>
 #include "ArduinoJson.h"
-#include <Wire.h>
-#include <Adafruit_SSD1306.h>
-
-#define SSID "XXXXX"
-#define PASSWD "XXXXX"
-
-#define SCREEN_WIDTH 128 // OLED display width, in pixels
-#define SCREEN_HEIGHT 64 // OLED display height, in pixels
-#define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
-#define SCREEN_ADDRESS 0x3C ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
+#include "main.h"
 
 #define BUZZER 18
-
-// Display object
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 // HTTP object
 HTTPClient http;
@@ -27,16 +14,6 @@ const char* date[10] = {0};
 const char* value[10] = {0};
 
 StaticJsonDocument<768> doc;
-
-void printCenter(const String buf, int x, int y)
-{
-  int16_t x1, y1;
-  uint16_t w, h;
-  display.getTextBounds(buf, x, y, &x1, &y1, &w, &h); //calc width of new string
-  display.setCursor((x - w / 2) + (128 / 2), y);
-  display.print(buf);
-  display.display();
-}
 
 void resultOfGet(String msg)
 {
@@ -76,36 +53,25 @@ void resultOfGet(String msg)
       printCenter(String(value[9]) + "%", 0, 40);  
 }
 
-void setup(){
-
+void setup()
+{
   Serial.begin(115200);
+  EEPROM.begin(512);
 
-  if (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) 
-  {
-    Serial.println(F("SSD1306 allocation failed"));
-    for (;;); // Don't proceed, loop forever
-  }
+  CaptivePortal cpTest;
+
+  displayInit();
 
   display.clearDisplay();
   display.setTextSize(1);
   display.setTextColor(WHITE);
-  display.println("Connecting to WiFi...");
+  display.println("Access the IP 8.8.4.4");
   display.display();
 
-  WiFi.begin(SSID,PASSWD);
+  cpTest.AccessPoint();
 
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.println(".");
-  }
-  Serial.println("Conected");
-
-  display.println("Connected to: ");
-  display.print(SSID);
-  display.display();
-  delay(1500);
-  display.clearDisplay();
-  display.display();
+  Serial.print("EEPROM content: ");
+  Serial.println(cpTest.readEEprom());
 
 //Go to arduinojson.org/v6/assistant to calcule the capacity
   const size_t capacity = JSON_OBJECT_SIZE(1) + JSON_ARRAY_SIZE(8) + 146;

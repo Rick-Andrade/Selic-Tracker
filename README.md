@@ -24,7 +24,7 @@ Is used an ESP32 development board as a server at first as a captive portal to g
 
 # Implementation
 ## Software Tasks
-- [ ] Captive portal
+- [x] Captive portal
 - [x] WiFi connection logic
 - [x] http request to a data base
 - [x] JSON parse
