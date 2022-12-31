@@ -70,8 +70,11 @@ void setup()
 
   cpTest.AccessPoint();
 
-  Serial.print("EEPROM content: ");
-  Serial.println(cpTest.readEEprom());
+  Serial.print("EEPROM SSID content: ");
+  Serial.println(cpTest.getSsidFromEEPROM());
+
+  Serial.print("EEPROM Password content: ");
+  Serial.println(cpTest.getPasswordFromEEPROM());
 
 //Go to arduinojson.org/v6/assistant to calcule the capacity
   const size_t capacity = JSON_OBJECT_SIZE(1) + JSON_ARRAY_SIZE(8) + 146;

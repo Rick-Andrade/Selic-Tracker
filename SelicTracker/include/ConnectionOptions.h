@@ -30,6 +30,8 @@ public:
     String readEEprom(void);
     void clearEEPROM(void);
     void WiFiInit(const char* ssid, const char* password);
+    String getSsidFromEEPROM(void);
+    String getPasswordFromEEPROM(void);
 };
 
 

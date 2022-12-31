@@ -50,7 +50,7 @@ void CaptivePortal::WiFiInit (const char* ssid, const char* password)
 
     Serial.println("");
     Serial.println("WiFi connected");
-    Serial.println("IP address: ");
+    Serial.print("IP address: ");
     Serial.println(WiFi.localIP());
 }
  
@@ -86,7 +86,7 @@ void CaptivePortal::AccessPoint()
     server.onNotFound(handleNotFound); 
     server.onNotFound([]()
     {
-        server.send(200,"text/html", responseHTML); // aqui é onde rola o captive portal com o dns
+        server.send(200,"text/html", responseHTML); 
         
     });
     
@@ -125,7 +125,7 @@ void CaptivePortal::writeInEprom(uint8_t baseAddress, String message)
 String CaptivePortal::readEEprom(void)
 {
     String readEepromAux;
-    
+
     Serial.println("Reading EEPROM...");
 
     for (uint8_t i = 0; i < 96; i++)
@@ -144,6 +144,22 @@ void CaptivePortal::clearEEPROM(void)
     {
         EEPROM.write(i, 0);
     }
+}
+
+String CaptivePortal::getSsidFromEEPROM(void)
+{
+    uint8_t indexOf = CaptivePortal::readEEprom().indexOf('\\');
+    String storedSSID = CaptivePortal::readEEprom().substring(2, indexOf);
+
+    return storedSSID;
+}
+
+String CaptivePortal::getPasswordFromEEPROM(void)
+{
+    uint8_t indexOf = CaptivePortal::readEEprom().indexOf('\\');
+    String storedPassword = CaptivePortal::readEEprom().substring(indexOf + 1, CaptivePortal::readEEprom().length());
+
+    return storedPassword;
 }
 
 
@@ -183,6 +199,7 @@ void handleForm()
     message += String(cpLauncher.getPassword().length(), HEX);
 
     message += cpLauncher.getSSID();
+    message += "\\";
     message += cpLauncher.getPassword();
 
     Serial.print("Will be write in EPROM: ");
